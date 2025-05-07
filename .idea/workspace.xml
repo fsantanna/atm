@@ -1,7 +1,98 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
   <component name="ChangeListManager">
-    <list default="true" id="33c6c893-703f-40c1-8319-3d390ece657a" name="Changes" comment="" />
+    <list default="true" id="33c6c893-703f-40c1-8319-3d390ece657a" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/junit.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/kotlin/Aux.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/kotlin/C.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/kotlin/Cache.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/kotlin/Checks.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/kotlin/Code.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/kotlin/Expr.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/kotlin/Lexer.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/kotlin/Main.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/kotlin/Mem.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/kotlin/Optim.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/kotlin/Parser.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/kotlin/Prelude.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/kotlin/Tostr.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/kotlin/Ups.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/test/ceu/.gitignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/test/ceu/01-hello.ceu" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/test/ceu/02-tags.ceu" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/test/ceu/03-templates.ceu" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/test/ceu/04-literals.ceu" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/test/ceu/05-comments.ceu" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/test/ceu/06-types.ceu" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/test/ceu/07-collections.ceu" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/test/ceu/08-user-types.ceu" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/test/ceu/09-collections.ceu" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/test/ceu/10-prototypes.ceu" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/test/ceu/11-lambdas.ceu" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/test/ceu/12-actives.ceu" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/test/ceu/13-blocks.ceu" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/test/ceu/13-tests.ceu" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/test/ceu/14-groups.ceu" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/test/ceu/15-defers.ceu" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/test/ceu/16-declarations.ceu" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/test/ceu/17-assignments.ceu" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/test/ceu/18-enums.ceu" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/test/ceu/19-templates.ceu" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/test/ceu/20-calls.ceu" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/test/ceu/21-indexes.ceu" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/test/ceu/22-cast.ceu" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/test/ceu/23-ppp.ceu" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/test/ceu/24-where-thus.ceu" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/test/ceu/25-operators.ceu" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/test/ceu/25-precedence.ceu" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/test/ceu/26-ifs.ceu" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/test/ceu/27-match.ceu" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/test/ceu/28-loops.ceu" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/test/ceu/29-iterators.ceu" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/test/ceu/30-errors.ceu" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/test/ceu/31-coroutines.ceu" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/test/ceu/32-resume-yield-all.ceu" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/test/ceu/33-tasks.ceu" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/test/ceu/34-awaits.ceu" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/test/ceu/35-broadcasts.ceu" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/test/ceu/36-sugar.ceu" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/test/ceu/37-pars.ceu" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/test/ceu/38-toggle.ceu" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/test/ceu/39-basic.ceu" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/test/ceu/40-math.ceu" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/test/ceu/41-random.ceu" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/test/ceu/42-hello.ceu" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/test/ceu/xx-data.ceu" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/test/kotlin/tst_01/Exec_01.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/test/kotlin/tst_01/Lexer_01.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/test/kotlin/tst_01/Parser_01.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/test/kotlin/tst_02/Exec_02.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/test/kotlin/tst_02/Lexer_02.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/test/kotlin/tst_02/Parser_02.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/test/kotlin/tst_03/Exec_03.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/test/kotlin/tst_03/Lexer_03.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/test/kotlin/tst_03/Parser_03.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/test/kotlin/tst_04/Exec_04.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/test/kotlin/tst_04/Lexer_04.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/test/kotlin/tst_04/Parser_04.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/test/kotlin/tst_05/Exec_05.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/test/kotlin/tst_05/Lexer_05.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/test/kotlin/tst_05/Parser_05.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/test/kotlin/tst_50/Exec_50.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/test/kotlin/tst_50/Lexer_50.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/test/kotlin/tst_50/Parser_50.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/test/kotlin/tst_99/Book_99.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/test/kotlin/tst_99/Exec_99.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/test/kotlin/tst_99/JS_99.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/test/kotlin/tst_99/Lexer_99.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/test/kotlin/tst_99/Parser_99.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/test.atm" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/atm.iml" beforeDir="false" afterPath="$PROJECT_DIR$/atm.iml" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -10,9 +101,9 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
-  <component name="ProjectColorInfo"><![CDATA[{
-  "associatedIndex": 3
-}]]></component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 3
+}</component>
   <component name="ProjectId" id="2wkM5NfDuxQZjIEWiaenRQj6C8q" />
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectViewState">
@@ -21,11 +112,144 @@
   </component>
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
+    "Downloaded.Files.Path.Enabled": "false",
+    "JUnit.Exec_01.executor": "Run",
+    "JUnit.Exec_02.executor": "Run",
+    "JUnit.Exec_03.executor": "Run",
+    "JUnit.Exec_04.executor": "Run",
+    "JUnit.Exec_05.executor": "Run",
+    "JUnit.Exec_50.executor": "Run",
+    "JUnit.Exec_99.executor": "Run",
+    "JUnit.JS_99.executor": "Run",
+    "JUnit.Lexer_01.executor": "Run",
+    "JUnit.Lexer_02.executor": "Run",
+    "JUnit.Lexer_03.executor": "Run",
+    "JUnit.Lexer_04.executor": "Run",
+    "JUnit.Lexer_05.executor": "Run",
+    "JUnit.Lexer_50.executor": "Run",
+    "JUnit.Lexer_99.executor": "Run",
+    "JUnit.Parser_01.executor": "Run",
+    "JUnit.Parser_02.executor": "Run",
+    "JUnit.Parser_03.executor": "Run",
+    "JUnit.Parser_04.executor": "Run",
+    "JUnit.Parser_05.executor": "Run",
+    "JUnit.Parser_50.executor": "Run",
+    "JUnit.Parser_99.executor": "Run",
+    "JUnit.main.test in atm.executor": "Run",
+    "JUnit.main.test.kotlin.tst_01 in atm.executor": "Run",
+    "JUnit.test.kotlin.tst_01 in atm.executor": "Run",
+    "Repository.Attach.Annotations": "false",
+    "Repository.Attach.JavaDocs": "false",
+    "Repository.Attach.Sources": "false",
     "RunOnceActivity.ShowReadmeOnStart": "true",
-    "git-widget-placeholder": "master",
-    "kotlin-language-version-configured": "true"
+    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "git-widget-placeholder": "main",
+    "kotlin-language-version-configured": "true",
+    "last_opened_file_path": "/x/atm",
+    "project.structure.last.edited": "Libraries",
+    "project.structure.proportion": "0.15",
+    "project.structure.side.proportion": "0.2"
   }
 }]]></component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$" />
+      <recent name="$PROJECT_DIR$/src" />
+      <recent name="$PROJECT_DIR$/build" />
+      <recent name="$PROJECT_DIR$/src/main/" />
+      <recent name="$PROJECT_DIR$/src/main" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/src" />
+    </key>
+  </component>
+  <component name="RunManager" selected="JUnit.Book_99">
+    <configuration name="Book_99" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="atm" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="tst_99.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="tst_99" />
+      <option name="MAIN_CLASS_NAME" value="tst_99.Book_99" />
+      <option name="TEST_OBJECT" value="class" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="Exec_99" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="atm" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="tst_99.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="tst_99" />
+      <option name="MAIN_CLASS_NAME" value="tst_99.Exec_99" />
+      <option name="TEST_OBJECT" value="class" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="JS_99" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="atm" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="tst_99.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="tst_99" />
+      <option name="MAIN_CLASS_NAME" value="tst_99.JS_99" />
+      <option name="TEST_OBJECT" value="class" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="JS_99.x_23" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="atm" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="tst_99.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="tst_99" />
+      <option name="MAIN_CLASS_NAME" value="tst_99.JS_99" />
+      <option name="METHOD_NAME" value="x_23" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="Parser_99" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="atm" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="tst_99.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="tst_99" />
+      <option name="MAIN_CLASS_NAME" value="tst_99.Parser_99" />
+      <option name="TEST_OBJECT" value="class" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="JUnit.Book_99" />
+        <item itemvalue="JUnit.JS_99.x_23" />
+        <item itemvalue="JUnit.JS_99" />
+        <item itemvalue="JUnit.Exec_99" />
+        <item itemvalue="JUnit.Parser_99" />
+      </list>
+    </recent_temporary>
+  </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
@@ -35,6 +259,19 @@
       <option name="presentableId" value="Default" />
       <updated>1746580939418</updated>
     </task>
+    <task id="LOCAL-00001" summary="- first commit">
+      <option name="closed" value="true" />
+      <created>1746580998977</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1746580998977</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="- first commit" />
+    <option name="LAST_COMMIT_MESSAGE" value="- first commit" />
   </component>
 </project>
