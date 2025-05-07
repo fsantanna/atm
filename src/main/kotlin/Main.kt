@@ -59,10 +59,27 @@ val KEYWORDS: SortedSet<String> = (
     ))
 ).toSortedSet()
 
-val OPERATORS = setOf('+', '-', '*', '/', '%', '>', '<', '=', '|', '&', '~')
-val XOPERATORS = if (CEU < 99) setOf() else {
-    setOf("and", "in?", "in-not?", "is?", "is-not?", "not", "or")
-}
+val OPERATORS = Pair (
+    setOf('+', '-', '*', '/', '%', '>', '<', '=', '|', '&', '\\', '?', '!' /*,'#'*/),
+    setOf(
+        //"#", "##",
+        "=", "=>", "->",
+        "==", "!=",
+        ">", "<", ">=", "<=",
+        "||", "&&",
+        "+", "-", "*", "/", "%",
+        "\\", "?", "!",
+        "++",
+    )
+)
+
+val BINS = listOf (
+    "==", "!=",
+    ">", "<", ">=", "<=",
+    "||", "&&",
+    "+", "-", "*", "/", "%",
+    "++",
+)
 
 val TAGS = listOf (
     ":nil", ":tag", ":bool", ":char", ":number", ":pointer",
