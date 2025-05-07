@@ -1105,7 +1105,7 @@ class Parser_99 {
         assert(trap { parser.expr() } == "anon : (lin 1, col 7) : expected \"with\" : have end of file")
     }
 
-    // AWAIT
+    // TODO
 
     @Test
     fun ja_00_await_err() {

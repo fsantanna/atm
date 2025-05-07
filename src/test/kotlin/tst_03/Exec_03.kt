@@ -266,7 +266,6 @@ class Exec_03 {
     @Test
     fun cc_07_resume_yield() {
         val out = test("""
-            $PLUS
             val CO = coro' () {
                 func' (it) { 
                     println(it)
@@ -281,7 +280,6 @@ class Exec_03 {
     @Test
     fun cc_08_resume_yield() {
         val out = test("""
-            $PLUS
             val CO = coro' () {
                 yield(10) ;;thus { it => nil }
             }
@@ -307,7 +305,6 @@ class Exec_03 {
     @Test
     fun cc_10_resume() {
         val out = test("""
-            $PLUS
             val CO = coro' (v1) {    ;; 10
                 func' (it) {     ;; 12
                     it + 1
@@ -323,7 +320,6 @@ class Exec_03 {
     @Test
     fun cc_10x_resume() {
         val out = test("""
-            $PLUS
             val CO = coro' (v1) {
                 println(:v1, v1)        ;; 10
                 val v2 = yield(v1+1)
@@ -525,7 +521,6 @@ class Exec_03 {
     @Test
     fun ee_01_coro() {
         val out = test("""
-            $PLUS
             var t
             set t = coro' (v) {
                 var v' = v

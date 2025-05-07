@@ -359,7 +359,6 @@ class Exec_01 {
     @Test
     fun be_02_rec() {
         val out = test("""
-            $PLUS
             val f = func' (v) {
                 if v == 0 {
                     0
@@ -374,7 +373,6 @@ class Exec_01 {
     @Test
     fun be_03_rec_rec() {
         val out = test("""
-            $PLUS
             ;;var g
             val f = func' (v) {
                 if v == 0 {
@@ -397,7 +395,6 @@ class Exec_01 {
     @Test
     fun be_04_rec() {
         val out = test("""
-            $PLUS
             do {
                 val f = func' (v) {
                     dump(:F, f)      ;; f is upval which is assigned nil
@@ -2728,10 +2725,10 @@ class Exec_01 {
         val out = test("""
             val t = func' () { dump(:t) ; true  }
             val f = func' () { dump(:f) ; false }
-            dump(${AND("t()", "f()")})
-            dump(${OR("t()", "f()")})
-            dump(${AND("[]", "false")})
-            dump(${OR("false", "[]")})
+            dump(t() and f())
+            dump(t() or f())
+            dump([] and false)
+            dump(false or [])
         """)
         assert(out == ":t\n:f\nfalse\n:t\ntrue\nfalse\n[]\n") { out }
     }
@@ -3155,7 +3152,6 @@ class Exec_01 {
     @Test
     fun nn_23_pipe() {
         val out = test("""
-            $PLUS
             val f = func' (v) { -v }
             dump(f(10))
         """)

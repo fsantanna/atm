@@ -183,7 +183,6 @@ class Exec_99 {
     @Test
     fun bb_06_op_plus_plus() {
         val out = test("""
-            $PLUS
             val v = 5 +
                 5 + 10
             println(v)
@@ -271,7 +270,6 @@ class Exec_99 {
     @Test
     fun bc_02_in() {
         val out = test("""
-            $PLUS
             func to-bool (v) {
                 not (not v)
             }
@@ -342,7 +340,6 @@ class Exec_99 {
     @Test
     fun cc_02_func() {
         val out = test("""
-            $PLUS
             func f (v) {
                 if v /= 0 {
                     println(v)
@@ -405,7 +402,6 @@ class Exec_99 {
     @Test
     fun TODO_cc_07_func_rec() {
         val out = test("""
-            $PLUS
             do {
                 func f (v) {
                     if v /= 0 {
@@ -557,7 +553,6 @@ class Exec_99 {
     @Test
     fun ff_01_ifs() {
         val out = test("""
-            $PLUS
             func {{<}} () {}
             val x = ifs {
                 10 < 1 => 99
@@ -614,7 +609,6 @@ class Exec_99 {
     @Test
     fun ff_04_ifs() {
         val out = test("""
-            $IS
             var x = match 20 {
                 == 10 => false
                 (|true)  => true
@@ -628,7 +622,6 @@ class Exec_99 {
     @Test
     fun ff_05_ifs() {
         val out = test("""
-            $COMP
             val x = match 20 {
                 10 => false
                 else     => true
@@ -640,7 +633,6 @@ class Exec_99 {
     @Test
     fun ff_06_ifs_is() {
         val out = test("""
-            $IS
             val t = :X []
             val x = match t {
                 is? :Y   => false
@@ -690,7 +682,6 @@ class Exec_99 {
     @Test
     fun ff_10_ifs() {
         val out = test("""
-            $IS ; $COMP
             var x = match 20 {
                 :no => false
                 10  => false
@@ -703,7 +694,6 @@ class Exec_99 {
     @Test
     fun ff_10x_ifs() {
         val out = test("""
-            $IS ; $COMP
             match 20 {
                 :no => println(:no)
             }
@@ -714,7 +704,6 @@ class Exec_99 {
     @Test
     fun ff_11_ifs() {
         val out = test("""
-            $IS ; $COMP
             data :T = [v]
             var x = match :T [20] {
                 (t1:T| t1.v == 10) => false
@@ -831,7 +820,6 @@ class Exec_99 {
     @Test
     fun fh_00_ifs () {
         val out = test("""
-            $IS ; $COMP
             val x = match [10,20] {
                 [10,20] => :ok
             }
@@ -849,7 +837,6 @@ class Exec_99 {
     @Test
     fun fh_01_ifs () {
         val out = test("""
-            $IS ; $COMP
             val x = match [10,20] {
                 [30,40] => error(:no)
                 [10,20] => :ok
@@ -861,7 +848,6 @@ class Exec_99 {
     @Test
     fun fh_01x_ifs () {
         val out = test("""
-            $IS ; $COMP
             match [10] {
                 [30] => error(:no)
                 [10] => println(:ok)
@@ -872,7 +858,6 @@ class Exec_99 {
     @Test
     fun fh_02_ifs () {
         val out = test("""
-            $IS ; $COMP
             val x = match 1 {
                 [1,2] => error(:no)     ;; 2 compares to nil
                 1 => :ok
@@ -884,7 +869,6 @@ class Exec_99 {
     @Test
     fun fh_02x_ifs () {
         val out = test("""
-            $IS ; $COMP
             val x = match 1 {
                 [1,nil] => (:ok)     ;; 2 compares to nil
                 1 => error(:no)
@@ -898,7 +882,6 @@ class Exec_99 {
     @Test
     fun fh_03_ifs () {
         val out = test("""
-            $IS ; $COMP
             val x = match [1,2] {
                 1 => error(:no)
                 [1,2] => :ok
@@ -913,7 +896,6 @@ class Exec_99 {
     @Test
     fun fi_00_catch_all() {
         val out = test("""
-            $ASR
             data :T = [v]
             match [10] {
                 do (t :T) => println(t.v)
@@ -924,7 +906,6 @@ class Exec_99 {
     @Test
     fun fi_01_ifs_no_catch_all() {
         val out = test("""
-            $ASR ; $IS ; $COMP
             data :T = [v]
             var x = match [20] {
                 false         => error()
@@ -941,7 +922,6 @@ class Exec_99 {
     @Test
     fun fi_02_ifs_no_catch_all() {
         val out = test("""
-            $ASR ; $IS ; $COMP
             data :T = [v]
             var x = match [20] {
                 false         => error()
@@ -958,7 +938,6 @@ class Exec_99 {
     @Test
     fun fi_03_ifs_no_catch_all() {
         val out = test("""
-            $ASR ; $IS ; $COMP
             data :T = [v]
             var x = match [20] {
                 false         => error()
@@ -977,7 +956,6 @@ class Exec_99 {
     @Test
     fun fi_03x_ifs_no_catch_all() {
         val out = test("""
-            $ASR ; $IS ; $COMP
             data :T = [v]
             var x = match :T [20] {
                 false         => error()
@@ -1023,7 +1001,6 @@ class Exec_99 {
     @Test
     fun fi_07_ifs_no_catch_all() {
         val out = test("""
-            $IS ; $COMP
             data :T = [v]
             var x = ifs {
                 false => error()
@@ -1045,7 +1022,6 @@ class Exec_99 {
     @Test
     fun fj_00() {
         val out = test("""
-            $COMP
             match [1,2] {
                 [x,y] => println(x,y)
             }
@@ -1055,7 +1031,6 @@ class Exec_99 {
     @Test
     fun fj_01() {
         val out = test("""
-            $COMP
             match [1,2] {
                 [10,x]  => error()
                 [1,2,3] => error()
@@ -1068,7 +1043,6 @@ class Exec_99 {
     @Test
     fun fj_02() {
         val out = test("""
-            $COMP
             match [1,2] {
                 [1] => println(:ok)
             }
@@ -1078,7 +1052,6 @@ class Exec_99 {
     @Test
     fun fj_03() {
         val out = test("""
-            $COMP
             match [1,2] {
                 [x] => println(x)
             }
@@ -1088,7 +1061,6 @@ class Exec_99 {
     @Test
     fun fj_04() {
         val out = test("""
-            $COMP
             match [1,2] {
                 [x,|false] => error()
                 [|it==1,y] => println(y)
@@ -1099,7 +1071,6 @@ class Exec_99 {
     @Test
     fun fj_05() {
         val out = test("""
-            $IS ; $COMP
             match :X [] {
                 :X [1] => error()
                 :Y []  => error()
@@ -1111,7 +1082,6 @@ class Exec_99 {
     @Test
     fun fj_06() {
         val out = test("""
-            $COMP
             match [1,[:x,:y],2] {
                 [1,xy,3]    => error()
                 [1,[x,y],2] => println(x,y)
@@ -1122,7 +1092,6 @@ class Exec_99 {
     @Test
     fun fj_07_err() {
         val out = test("""
-            $COMP
             match nil {
                 [] => println(:ok)
             }
@@ -1133,7 +1102,6 @@ class Exec_99 {
     @Test
     fun fj_08_val() {
         val out = test("""
-            $COMP ; $ASR
             val [x,y]
             println(x,y)
         """)
@@ -1142,7 +1110,6 @@ class Exec_99 {
     @Test
     fun fj_09_val() {
         val out = test("""
-            $COMP ; $ASR
             val [x,y] = [1,2]
             println(x,y)
         """)
@@ -1171,7 +1138,6 @@ class Exec_99 {
     @Test
     fun fj_12_val_err() {
         val out = test("""
-            $COMP ; $ASR
             val [x,1] = [1,2]
             println(x,y)
         """)
@@ -1180,7 +1146,6 @@ class Exec_99 {
     @Test
     fun fj_13_val_err() {
         val out = test("""
-            $COMP ; $ASR
             val [x,1] = [1,2]
             println(x)
         """)
@@ -1402,7 +1367,6 @@ class Exec_99 {
     @Test
     fun hi_04x_tags() {
         val out = test("""
-            $ASR
             data :T = [x]
             val [a:T,b:T] = [:T [1], :T [2]]
             println(a.x, b.x)
@@ -1871,7 +1835,6 @@ class Exec_99 {
     @Test
     fun jj_06_break_sum() {
         val out = test("""
-            $PLUS
             var sum = func (n) {                                                            
                 var i = n                                                                   
                 var s = 0                                                                   
@@ -2071,10 +2034,10 @@ class Exec_99 {
         val out = test("""
             val t = func () { println(:t) ; true  }
             val f = func () { println(:f) ; false }
-            println(${AND("t()", "f()")})
-            println(${OR("t()", "f()")})
-            println(${AND("[]", "false")})
-            println(${OR("false", "[]")})
+            println(t() and f())
+            println(t() or f())
+            println([] and false)
+            println(false or [])
         """)
         assert(out == ":t\n:f\nfalse\n:t\ntrue\nfalse\n[]\n") { out }
     }
@@ -2118,7 +2081,6 @@ class Exec_99 {
     @Test
     fun mm_11_resume_yield() {
         val out = test("""
-            $PLUS
             val CO = coro () {
                 yield(nil) thus {\ it => 
                     println(it)
@@ -2496,7 +2458,6 @@ class Exec_99 {
     @Test
     fun fg_01_iter() {
         val out = test("""
-            $PLUS
             func to-iter (v) { v }
             func f (t) {
                 if t[1] == t[2] {
@@ -2518,7 +2479,6 @@ class Exec_99 {
     @Test
     fun fg_02_iter() {
         val out = test("""
-            $PLUS
             func to-iter (v) { v }
             func f (t) {
                 if t[1] == t[2] {
@@ -2687,7 +2647,6 @@ class Exec_99 {
     @Test
     fun fg_16_string_concat() {
         val out = test("""
-            $PLUS ; $COMP
             func f (v1, v2) {
                 ;;println(:X, v1, v2)
                 loop i in {0 => #v2{ {
@@ -2830,7 +2789,6 @@ class Exec_99 {
     @Test
     fun fg_26_loop_num() {
         val out = test("""
-            $PLUS ; $COMP
             loop in {0 => -2{ {
                 nil
             }
@@ -3055,7 +3013,6 @@ class Exec_99 {
     @Test
     fun fh_01z_iter() {
         val out = test("""
-            $PLUS ; $ASR
             func iter-tuple (itr) {
                 val i = itr[2]
                 if i == #itr[1] {
@@ -3205,7 +3162,6 @@ class Exec_99 {
     @Test
     fun fi_05_loop() {
         val out = test("""
-            $PLUS
             loop it {
                 println(it)
                 until true
@@ -3653,7 +3609,6 @@ class Exec_99 {
     @Test
     fun hh_02_yieldall() {
         val out = test("""
-            $PLUS
             coro foo (x4) {
                 val x6 = yield(x4+1)
                 val x8 = yield(x6+1)
@@ -3780,15 +3735,15 @@ class Exec_99 {
             spawn {
                 do {
                     val t1 = spawn {
-                        ${AWAIT()}
+                        ${TODO()}
                         println(1)
                     }
                     spawn {
                         defer { println(3) }
-                        ${AWAIT()}
+                        ${TODO()}
                         println(2)
                     }
-                    ${AWAIT("it==t1")}
+                    ${TODO("it==t1")}
                     nil
                 }
                 println(:ok)
@@ -4104,11 +4059,11 @@ class Exec_99 {
         val out = test("""
             spawn {
                 par-or {
-                    ${AWAIT()}
+                    ${TODO()}
                     println(1)
                 } with {
                     defer { println(3) }
-                    ${AWAIT()}
+                    ${TODO()}
                     println(2)
                 }
                 println(:ok)
@@ -4123,7 +4078,7 @@ class Exec_99 {
             spawn {
                 par-or {
                     defer { println(3) }
-                    ${AWAIT()}
+                    ${TODO()}
                     println(999)
                 } with {
                     println(2)
@@ -4158,16 +4113,16 @@ class Exec_99 {
             spawn {
                 par-or {
                     defer { println(1) }
-                    ${AWAIT()}
-                    ${AWAIT()}
+                    ${TODO()}
+                    ${TODO()}
                     println(999)
                 } with {
-                    ${AWAIT()}
+                    ${TODO()}
                     println(2)
                 } with {
                     defer { println(3) }
-                    ${AWAIT()}
-                    ${AWAIT()}
+                    ${TODO()}
+                    ${TODO()}
                     println(999)
                 }
                 println(999)
@@ -4201,16 +4156,16 @@ class Exec_99 {
             spawn {
                 par-and {
                     defer { println(1) }
-                    ${AWAIT()}
-                    ${AWAIT()}
+                    ${TODO()}
+                    ${TODO()}
                     println(1)
                 } with {
-                    ${AWAIT()}
+                    ${TODO()}
                     println(2)
                 } with {
                     defer { println(3) }
-                    ${AWAIT()}
-                    ${AWAIT()}
+                    ${TODO()}
+                    ${TODO()}
                     println(3)
                 }
                 println(:ok)
@@ -4476,12 +4431,11 @@ class Exec_99 {
         assert(out == ":0\n:1\n:2\n:3\n:4\n") { out }
     }
 
-    // AWAIT
+    // TODO
 
     @Test
     fun kk_01_await() {
         val out = test("""
-            $IS
             task T () {
                 await(it| it is? :x)
                 println(1)
@@ -4495,7 +4449,6 @@ class Exec_99 {
     @Test
     fun kk_02_await() {
         val out = test("""
-            $IS
             spawn {
                 println(0)
                 await ( |(it/=nil) and (it[:type]==:x) )
@@ -4514,7 +4467,6 @@ class Exec_99 {
     @Test
     fun kk_03_await() {
         val out = test("""
-            $IS
             data :x = []
             spawn {
                 println(0)
@@ -4534,7 +4486,6 @@ class Exec_99 {
     @Test
     fun kk_04_await() {
         val out = test("""
-            $IS
             data :x = []
             spawn {
                 println(0)
@@ -4607,7 +4558,6 @@ class Exec_99 {
     @Test
     fun kk_08_await() {
         val out = test("""
-            $COMP
             spawn {
                 await (2)
                 println(2)
@@ -4622,7 +4572,6 @@ class Exec_99 {
     @Test
     fun kk_09_await_it() {
         val out = test("""
-            $IS
             data :X = []
             spawn {
                 await :X {
@@ -4638,7 +4587,6 @@ class Exec_99 {
     @Test
     fun kk_10_await_escape() {
         val out = test("""
-            $IS
             spawn {
                 println(await())
             }
@@ -4653,7 +4601,6 @@ class Exec_99 {
     @Test
     fun kk_11_await_thus_yield() {
         val out = test("""
-            $IS
             spawn {
                 await(:X) {
                     yield()
@@ -4689,7 +4636,6 @@ class Exec_99 {
     @Test
     fun kk_13_await_drag() {
         val out = test("""
-            $IS
             spawn {
                 val click = await(:X) {
                     println(:it, it)
@@ -4707,7 +4653,6 @@ class Exec_99 {
     @Test
     fun kk_14_await_data() {
         val out = test("""
-            $IS
             data :T = [v]
             spawn {
                 await :T {
@@ -4719,7 +4664,7 @@ class Exec_99 {
         assert(out == ":ok\n") { out }
     }
 
-    // AWAIT / EVT / TEMPLATE / DATA
+    // TODO / EVT / TEMPLATE / DATA
 
     @Test
     fun ka_01_await_data() {
@@ -4768,7 +4713,7 @@ class Exec_99 {
         assert(out == "10\n20\n") { out }
     }
 
-    // AWAIT / TASK
+    // TODO / TASK
 
     @Test
     fun kl_01_await_task() {
@@ -4822,7 +4767,6 @@ class Exec_99 {
     fun km_01_every() {
         val out = test(
             """
-            $IS
             task T () {
                 println(:1)
                 every (|true) {
@@ -4840,7 +4784,6 @@ class Exec_99 {
     fun km_02_every() {
         val out = test(
             """
-            $IS
             task T () {
                 println(:1)
                 every (|true) {
@@ -4857,7 +4800,6 @@ class Exec_99 {
     @Test
     fun km_03_every() {
         val out = test("""
-            $IS
             data :X = []
             spawn {
                 par {
@@ -4874,7 +4816,6 @@ class Exec_99 {
     @Test
     fun km_04_every() {
         val out = test("""
-            $IS
             spawn {
                 every (|true) {
                     yield()
@@ -4895,7 +4836,6 @@ class Exec_99 {
     @Test
     fun km_05_every() {
         val out = test("""
-            $IS
             spawn {
                 var rect = []
                 spawn {
@@ -4924,7 +4864,6 @@ class Exec_99 {
     @Test
     fun km_06_every_data() {
         val out = test("""
-            $IS
             data :T = [v]
             spawn {
                 every :T {
@@ -5009,7 +4948,6 @@ class Exec_99 {
     fun km_11_every() {
         val out = test(
             """
-            $IS
             task T () {
                 val v = every (|true) {
                     until :ok
@@ -5027,7 +4965,6 @@ class Exec_99 {
     @Test
     fun km_01_clock() {
         val out = test("""
-            $IS ; $PLUS ; $MULT ; $COMP
             data :Clock = [ms]
             spawn {
                 await <2:ms>
@@ -5044,7 +4981,6 @@ class Exec_99 {
     @Test
     fun km_02_clock() {
         val out = test("""
-            $IS ; $PLUS ; $MULT ; $COMP
             data :Clock = [ms]
             spawn {
                 var x = 10
@@ -5068,7 +5004,7 @@ class Exec_99 {
         assert(out == ":0\n:x\t10\n:1\n:x\t9\n:2\n:x\t8\n:3\n") { out }
     }
 
-    // AWAIT / ORIGINAL
+    // TODO / ORIGINAL
 
     @Test
     fun kn_01_await_task() {
@@ -5249,14 +5185,13 @@ class Exec_99 {
     @Test
     fun ll_01_watching() {
         val out = test("""
-            $COMP
             spawn {
                 watching 1 {
                     defer { println(:z) }
                     println(:x)
-                    ${AWAIT()}
+                    ${TODO()}
                     println(:y)
-                    ${AWAIT()}
+                    ${TODO()}
                     println(999)
                 }
                 println(:A)
@@ -5439,7 +5374,6 @@ class Exec_99 {
     @Test
     fun mm_03_toggle() {
         val out = test("""
-            $IS
             spawn {
                 val x = toggle :Show {
                     10
@@ -5485,7 +5419,6 @@ class Exec_99 {
     @Test
     fun oo_04_method() {
         val out = test("""
-            $PLUS
             func f (v,x) { v - x }
             val v = 10->f(20)
             println(v)
@@ -5504,7 +5437,6 @@ class Exec_99 {
     @Test
     fun oo_06_method() {
         val out = test("""
-            $PLUS
             func f (v,x) { v - x }
             val v = f(10)<-20
             println(v)
@@ -5535,7 +5467,6 @@ class Exec_99 {
     @Test
     fun op_01_pipe() {
         val out = test("""
-            $PLUS
             func f (v,x) { v+x }
             val v = 10-->f(20)
             println(v)
@@ -5555,7 +5486,6 @@ class Exec_99 {
     @Test
     fun op_03_pipe() {
         val out = test("""
-            $PLUS
             func g (v) { v+1 }
             func f (v) { -v }
             val v = f<--10->g
@@ -5695,7 +5625,6 @@ class Exec_99 {
     fun oq_01_where() {
         val out = test(
             """
-                $PLUS
             println(x) where {
                 val x = 1
             }
@@ -5734,7 +5663,6 @@ class Exec_99 {
     fun op_04_where() {
         val out = test(
             """
-            $PLUS
             val z = y + 10 where {
                 val y = 20
             }
@@ -5826,7 +5754,6 @@ class Exec_99 {
     @Test
     fun pp_02_lambda () {
         val out = test("""
-            $PLUS
             println({\x=>x+x}(2))
         """)
         assert(out.contains("4\n")) { out }
@@ -5898,7 +5825,6 @@ class Exec_99 {
     @Test
     fun pp_10_lambda_call () {
         val out = test("""
-            $PLUS
             println({\x,y => x+y }(10,30))
         """)
         assert(out == "40\n") { out }
@@ -6057,7 +5983,6 @@ class Exec_99 {
     @Test
     fun vv_01_ppp_peek() {
         val out = test("""
-            $PLUS
             val v = #[1]
             set v[=] = 10
             println(v)
@@ -6067,7 +5992,6 @@ class Exec_99 {
     @Test
     fun vv_02_ppp_peek() {
         val out = test("""
-            $PLUS
             val v = #[10]
             println(v[=])
         """)
@@ -6076,7 +6000,6 @@ class Exec_99 {
     @Test
     fun vv_03_ppp_push() {
         val out = test("""
-            $PLUS
             val v = #[]
             set v[+] = 1
             println(v)
@@ -6086,7 +6009,6 @@ class Exec_99 {
     @Test
     fun TODO_COL_vv_04_ppp_push_err() {
         val out = test("""
-            $PLUS
             val v = #[]
             v[+]
         """,)
@@ -6096,7 +6018,6 @@ class Exec_99 {
     @Test
     fun vv_05_ppp_pop() {
         val out = test("""
-            $PLUS
             var v = #[1]
             var x = v[-]
             println(#v, x)
@@ -6106,7 +6027,6 @@ class Exec_99 {
     @Test
     fun vv_06_ppp_pop_err() {
         val out = test("""
-            $PLUS
             val v = #[1]
             set v[-] = 10   ;; cannot set v[-]
             println(v)
@@ -6116,7 +6036,6 @@ class Exec_99 {
     @Test
     fun vv_07_ppp() {
         val out = test("""
-            $PLUS
             var v
             set v = #[]
             set v[+] = 1
@@ -6132,7 +6051,6 @@ class Exec_99 {
     @Test
     fun vv_08_ppp_debug() {
         val out = test("""
-            $PLUS
             var v
             set v = #[10]
             println(v[#v - 1])
@@ -6142,7 +6060,6 @@ class Exec_99 {
     @Test
     fun vv_09_ppp_debug() {
         val out = test("""
-            $PLUS
             var v
             set v = #[10]
             println(v[-1+1])
@@ -6152,7 +6069,6 @@ class Exec_99 {
     @Test
     fun vv_10_ppp() {
         val out = test("""
-            $PLUS
             val stk = [1]
             stk[-]
             println(stk, #stk)
@@ -7096,7 +7012,6 @@ class Exec_99 {
     fun BUG_zz_02_track_bcast() {
         DEBUG = true
         val out = test("""
-            $IS
             val B = task () {
                 yield(nil)
             }
@@ -7137,7 +7052,6 @@ class Exec_99 {
     @Test
     fun BUG_zz_04_par_arg() {
         val out = test("""
-            $IS
             task T (v) {
                 par {
                     every :X {
@@ -7254,7 +7168,6 @@ class Exec_99 {
     @Test
     fun zz_11_js_x_03() {
         val out = test("""
-            $PLUS ; $COMP
             val v = #[]
             loop i in {1 => 2} {
                 val' x = v

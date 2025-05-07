@@ -570,74 +570,7 @@ class Coder () {
                 }
             """
             }
-            is Expr.Index -> {
-                val idx = this.data().let { if (it === null) -1 else it.first!! }
-                val id_col = this.idx("col_$n")
-                val id_val = this.idx("val_$n")
-                """
-                { -- INDEX | ${this.dump()}
-                    -- VAL
-                    ${this.is_dst().cond { """
-                        ${this.dcl()} $id_val = CEU_ACC_KEEP();
-                    """ }}
-                    
-                    -- COL
-                    ${this.col.code()}
-                    ${this.dcl()} $id_col = CEU_ACC_KEEP();
-
-                    // IDX
-                    ${if (idx == -1) {
-                        this.idx.code()
-                    } else {
-                        """
-                        CEU_ACC(((CEU_Value) { CEU_VALUE_NUMBER, {.Number=$idx} }));
-                        """
-                    }}
-                    CEU_Value ceu_idx_$n = CEU_ACC_KEEP();
-                """ +
-                when {
-                    this.is_dst() -> """
-                        { -- INDEX | DST | ${this.dump()}
-                            char* ceu_err_$n = ceu_col_set($id_col, ceu_idx_$n, $id_val);
-                            ceu_gc_dec_val($id_col);
-                            ceu_gc_dec_val(ceu_idx_$n);
-                            ceu_acc = $id_val;
-                            CEU_ERROR_CHK_PTR (
-                                continue,
-                                ceu_err_$n,
-                                ${this.toerr()}
-                            );
-                        }
-                        """
-                    this.is_drop() -> {
-                        val depth = this.base()!!.depth_diff()
-                        """
-                        { -- INDEX | DROP | ${this.dump()}
-                            CEU_ACC((CEU_Value) { CEU_VALUE_NIL });     // ceu_acc may be equal to $idx (hh_05_coro)
-                            CEU_Value ceu_$n = ceu_col_get($id_col, ceu_idx_$n);
-                            ceu_gc_inc_val(ceu_$n);
-                            char* ceu_err_$n = ceu_col_set($id_col, ceu_idx_$n, (CEU_Value) { CEU_VALUE_NIL });
-                            ceu_gc_dec_val($id_col);
-                            CEU_ERROR_CHK_PTR (
-                                continue,
-                                ceu_drop(ceu_$n, ceux->depth-$depth),
-                                ${this.fupx().toerr()}
-                            );
-                            CEU_ACC(ceu_$n);
-                            ceu_gc_dec_val(ceu_$n);
-                        }
-                    """
-                    }
-                    else -> """
-                        CEU_ACC(ceu_col_get($id_col, ceu_idx_$n));
-                        ceu_gc_dec_val($id_col);
-                        ceu_gc_dec_val(ceu_idx_$n);
-                        CEU_ERROR_CHK_ERR(continue, ${this.toerr()});
-                    """
-                } + """
-                }
-                """
-            }
+            is Expr.Index -> this.col.code() + "[" + this.idx.code() + "]"
             is Expr.Call -> this.clo.code() + "(" + this.args.map { it.code() }.joinToString(", ") + ")\n"
         }
     }

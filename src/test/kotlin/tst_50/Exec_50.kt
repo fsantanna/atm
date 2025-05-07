@@ -120,7 +120,6 @@ class Exec_50 {
     @Test
     fun bb_05_lex_nest() {
         val out = test("""
-            $PLUS
             func' () {
                 val str = #[]
                 var i = 0
@@ -770,7 +769,6 @@ class Exec_50 {
     @Test
     fun BUG_nn_17_nest_rec() {
         val out = test("""
-            $PLUS
             do {
                 val f = func' :nested (v) {
                     ;;println(:F, f)      ;; f is upval which is assigned nil
@@ -2869,7 +2867,7 @@ class Exec_50 {
     fun ff_05_track_err() {
         val out = test("""
             val T = task' () {
-                ${AWAIT()}
+                ${TODO()}
             }
             val x = do {
                 val t = spawn T()
@@ -2886,7 +2884,7 @@ class Exec_50 {
     fun ff_06_track_err() {
         val out = test("""
             val T = task' () {
-                ${AWAIT()}
+                ${TODO()}
             }
             val x = do {
                 val ts = tasks()

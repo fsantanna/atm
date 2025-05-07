@@ -403,7 +403,6 @@ class Exec_04 {
         DEBUG = true
         val out = test(
             """
-            $PLUS
             var i = 0
             enclose' :break {
                 loop' {
@@ -976,7 +975,7 @@ class Exec_04 {
             """
             val T = task' (v) {
                 println(:1)
-                val e = ${AWAIT()}
+                val e = ${TODO()}
                 println(:2, e)                
             }
             spawn T()
@@ -992,7 +991,7 @@ class Exec_04 {
             val T = task' (v) {
                 yield(nil)
                 ;;println(:time, `:number CEU_TIME_MAX`)
-                val e = ${AWAIT()}
+                val e = ${TODO()}
                 println(e)                
             }
             spawn T ()
@@ -1029,9 +1028,9 @@ class Exec_04 {
             var tk
             set tk = task' (v) {
                 println(v)
-                val e1 = ${AWAIT()}
+                val e1 = ${TODO()}
                 println(e1)                
-                val e2 = ${AWAIT()}
+                val e2 = ${TODO()}
                 println(e2)                
             }
             println(:1)
@@ -2125,10 +2124,10 @@ class Exec_04 {
             """
             var co1 = spawn (task' () {
                 var co2 = spawn (task' () {
-                    ${AWAIT()}
+                    ${TODO()}
                     error(:error)
                 })()
-                ${AWAIT()}
+                ${TODO()}
                 println(1)
             })()
             broadcast(nil)
@@ -2395,9 +2394,9 @@ class Exec_04 {
             var tk
             set tk = task' (v) {
                 println(v)
-                val e1 = ${AWAIT()}
+                val e1 = ${TODO()}
                 println(e1)                
-                val e2 = ${AWAIT()}
+                val e2 = ${TODO()}
                 println(e2)                
             }
             println(:1)
@@ -2669,7 +2668,7 @@ class Exec_04 {
         val out = test(
             """
             val T = task' (v) {
-                ${AWAIT()}
+                ${TODO()}
                 println(v)
             }
             val t1 = spawn T (1)
@@ -2685,10 +2684,10 @@ class Exec_04 {
         val out = test(
             """
             val T = task' (v) {
-                ${AWAIT()}
+                ${TODO()}
                 println(v)
                 spawn( task' () {
-                    println(${AWAIT()})
+                    println(${TODO()})
                 }) ()
                 broadcast(10)
             }
@@ -3849,7 +3848,6 @@ class Exec_04 {
     fun mm_02_abortion() {
         val out = test(
             """
-            $PLUS
             println(:1)
             var x = 0
             enclose' :break {
@@ -3904,13 +3902,13 @@ class Exec_04 {
                                 yield(nil) ;;thus { it => nil }
                                 println(:1)
                             }) ()
-                            ${AWAIT("it==t2")}
+                            ${TODO("it==t2")}
                             println(:2)
                         }) ()
-                        ${AWAIT("it==t1")}
+                        ${TODO("it==t1")}
                         println(:3)
                     }
-                    ${AWAIT("it==:X")}
+                    ${TODO("it==:X")}
                     println(:99)
                 }) ()
                 println(:0)
@@ -5259,7 +5257,7 @@ class Exec_04 {
                 defer {
                     println(10)
                 }
-                ${AWAIT()}
+                ${TODO()}
                 println(999)
             }
             var t
@@ -5294,10 +5292,10 @@ class Exec_04 {
             """
             val T = task' () {
                 spawn (task' () {
-                    ${AWAIT()}
+                    ${TODO()}
                     println(3)
                 }) ()
-                ${AWAIT()}
+                ${TODO()}
                 println(4)
             }
             println(1)
@@ -5896,13 +5894,13 @@ class Exec_04 {
                 println(2)
                 spawn (task' () {
                     println(3)
-                    ${AWAIT()}
+                    ${TODO()}
                     println(6)
                     error(:ok)
                 }) ()
                 spawn (task' () {
                     println(4)
-                    ${AWAIT()}
+                    ${TODO()}
                     println(999)
                 }) ()
                 println(5)
@@ -6069,15 +6067,15 @@ class Exec_04 {
             spawn task' () {
                 do {
                     val t1 = spawn task' () {
-                        ${AWAIT()}
+                        ${TODO()}
                         println(1)
                     } ()
                     spawn task' () {
                         defer { println(3) }
-                        ${AWAIT()}
+                        ${TODO()}
                         println(2)
                     } ()
-                    ${AWAIT ("t1")}
+                    ${TODO ("t1")}
                 }
                 println(999)
             } ()
@@ -6375,7 +6373,7 @@ class Exec_04 {
                     val t = spawn (task' () {
                         yield(nil) ; delay
                     }) ()
-                    ${AWAIT("t")}
+                    ${TODO("t")}
                     delay
                     println(true)
                     broadcast(:Y)

@@ -382,7 +382,6 @@ class Exec_02 {
     @Test
     fun dd_12_iter() {
         val out = test("""
-            $PLUS
             val f = func' (t) {
                 if t[1] == 5 {
                     nil
@@ -408,7 +407,6 @@ class Exec_02 {
     @Test
     fun dd_13_iter() {
         val out = test("""
-            $PLUS
             var i = 0
             enclose' :break {
                 loop' {

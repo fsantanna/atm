@@ -156,7 +156,6 @@ class Exec_05 {
     @Test
     fun aa_11_spawn() {
         val out = test("""
-            $PLUS
             val T = task' (v) { nil }
             val ts = tasks()
             var x = 0
@@ -672,7 +671,7 @@ class Exec_05 {
     fun bb_05_bcast_in_task_err() {
         val out = test("""
             val T = task' (v) {
-                ${AWAIT()}
+                ${TODO()}
                 ;;yield(nil)
                 println(v)
             }
@@ -688,7 +687,7 @@ class Exec_05 {
     fun bb_05_bcast_in_task_ok() {
         val out = test("""
             val T = task' (v) {
-                ${AWAIT()}
+                ${TODO()}
                 ;;yield(nil)
                 println(v)
             }
@@ -704,7 +703,7 @@ class Exec_05 {
     fun bb_05_bcast_in_task() {
         val out = test("""
             val T = task' (v) {
-                ${AWAIT()}
+                ${TODO()}
                 ;;yield(nil)
                 println(v)
             }
@@ -1054,7 +1053,7 @@ class Exec_05 {
     fun cc_10_detrack() {
         val out = test("""
             val T = task' (v) {
-                ${AWAIT("it == v")}
+                ${TODO("it == v")}
             }
             val t = spawn T()
             val x = ;;;track;;;(t)
@@ -1130,7 +1129,7 @@ class Exec_05 {
     fun dd_03b_detrack_err() {
         val out = test("""
             val T = task' () {
-                ${AWAIT()}
+                ${TODO()}
             }
             val ts = tasks()
             spawn T() in ts
@@ -1400,7 +1399,7 @@ class Exec_05 {
     fun ff_02_detrack_err() {
         val out = test("""
             val T = task' () {
-                ${AWAIT()}
+                ${TODO()}
             }
             val ts = tasks()
             spawn T() in ts
@@ -1422,7 +1421,7 @@ class Exec_05 {
     fun ff_02x_detrack_err() {
         val out = test("""
             val T = task' () {
-                ${AWAIT()}
+                ${TODO()}
             }
             val ts = tasks()
             spawn T() in ts
@@ -1446,7 +1445,7 @@ class Exec_05 {
     fun ff_02y_detrack_err() {
         val out = test("""
             val T = task' () {
-                ${AWAIT()}
+                ${TODO()}
             }
             val ts = tasks()
             spawn T() in ts
@@ -1473,7 +1472,7 @@ class Exec_05 {
     fun ff_03_detrack_err() {
         val out = test("""
             val T = task' () {
-                ${AWAIT()}
+                ${TODO()}
             }
             val t = spawn T()
             val x = ;;;track;;;(t)
@@ -1486,7 +1485,7 @@ class Exec_05 {
     fun ff_04_detrack_ok() {
         val out = test("""
             val T = task' () {
-                ${AWAIT()}
+                ${TODO()}
             }
             val t = spawn T()
             val x = ;;;track;;;(t)
@@ -1501,7 +1500,7 @@ class Exec_05 {
     fun ff_05_track_err() {
         val out = test("""
             val T = task' () {
-                ${AWAIT()}
+                ${TODO()}
             }
             val x = do {
                 val t = spawn T()
@@ -1516,7 +1515,7 @@ class Exec_05 {
     fun ff_06_track_err() {
         val out = test("""
             val T = task' () {
-                ${AWAIT()}
+                ${TODO()}
             }
             val x = do {
                 val ts = tasks()
@@ -1531,7 +1530,7 @@ class Exec_05 {
     fun ff_07_track_err() {
         val out = test("""
             val T = task' () {
-                ${AWAIT()}
+                ${TODO()}
             }
             val ts = tasks()
             val x = do {
@@ -1867,7 +1866,7 @@ class Exec_05 {
     fun hh_04_next() {
         val out = test("""
             val T = task' (v) {
-                ${AWAIT("it == v")}
+                ${TODO("it == v")}
             }
             val ts = tasks()
             spawn T(1) in ts
@@ -2873,7 +2872,7 @@ class Exec_05 {
         val out = test("""
             var T = task' () {
                 set pub = [10]
-                ${AWAIT("it == :evt")}
+                ${TODO("it == :evt")}
             }
             var t = spawn T()
             var x = ;;;track;;;(t)
