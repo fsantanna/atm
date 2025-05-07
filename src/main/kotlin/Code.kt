@@ -572,6 +572,8 @@ class Coder () {
             }
             is Expr.Index -> this.col.code() + "[" + this.idx.code() + "]"
             is Expr.Call -> this.clo.code() + "(" + this.args.map { it.code() }.joinToString(", ") + ")\n"
+            is Expr.Uno  -> "(" + this.tk_.str_ + this.e.code() + ")"
+            is Expr.Bin  -> "(" + this.e1.code() + this.tk_.str_ + this.e2.code() + ")"
         }
     }
 }

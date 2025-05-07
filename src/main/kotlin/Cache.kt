@@ -95,6 +95,11 @@ fun cache_ups () {
                 G.ups[me.clo.n] = me.n
                 me.args.forEach { G.ups[it.n] = me.n }
             }
+            is Expr.Uno -> G.ups[me.e.n] = me.n
+            is Expr.Bin -> {
+                G.ups[me.e1.n] = me.n
+                G.ups[me.e2.n] = me.n
+            }
         }
     }
 }

@@ -160,6 +160,11 @@ fun check_vars () {
                 this.data()
             }
             is Expr.Call   -> { this.clo.traverse() ; this.args.forEach { it.traverse() } }
+            is Expr.Uno  -> this.e.traverse()
+            is Expr.Bin  -> {
+                this.e1.traverse()
+                this.e2.traverse()
+            }
         }
     }
     G.outer!!.traverse()
@@ -407,7 +412,11 @@ class Static () {
                 if (this.clo is Expr.Acc && this.clo.tk.str=="tasks") {
                     //defer_catch_spawn_tasks.add(this.up_first { it is Expr.Do } as Expr.Do)
                 }
-
+            }
+            is Expr.Uno -> this.e.traverse()
+            is Expr.Bin  -> {
+                this.e1.traverse()
+                this.e2.traverse()
             }
         }
     }

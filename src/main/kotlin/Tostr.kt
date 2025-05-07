@@ -96,6 +96,8 @@ fun Expr.to_str (pre: Boolean = false): String {
         is Expr.Dict   -> "@[" + this.args.map { "(${it.first.to_str(pre)},${it.second.to_str(pre)})" }.joinToString(",") + "]"
         is Expr.Index  -> this.col.to_str(pre) + "[" + this.idx.to_str(pre) + "]"
         is Expr.Call   -> this.clo.to_str(pre) + "(" + this.args.map { it.to_str(pre) }.joinToString(",") + ")"
+        is Expr.Uno    -> this.tk_.str_ + this.e.to_str(pre)
+        is Expr.Bin    -> this.e1.to_str(pre) + this.tk_.str_ + this.e2.to_str(pre)
                             // TODO: collapse broadcast'
     }.let {
         when {

@@ -37,7 +37,10 @@ fun <V> Expr.dn_collect (f: (Expr)->List<V>?): List<V> {
         is Expr.Vector -> this.args.map { it.dn_collect(f) }.flatten()
         is Expr.Dict   -> this.args.map { it.first.dn_collect(f) + it.second.dn_collect(f) }.flatten()
         is Expr.Index  -> this.col.dn_collect(f) + this.idx.dn_collect(f)
+
         is Expr.Call   -> this.clo.dn_collect(f) + this.args.map { it.dn_collect(f) }.flatten()
+        is Expr.Uno    -> this.e.dn_collect(f)
+        is Expr.Bin    -> this.e1.dn_collect(f) + this.e2.dn_collect(f)
 
         is Expr.Acc, is Expr.Data, is Expr.Nat,
         is Expr.Nil, is Expr.Tag, is Expr.Bool,

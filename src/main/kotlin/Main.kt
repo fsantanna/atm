@@ -213,6 +213,8 @@ sealed class Expr (var n: Int, val tk: Tk) {
     data class Dict    (val tk_: Tk.Fix, val args: List<Pair<Expr,Expr>>): Expr(G.N++, tk_)
     data class Index   (val tk_: Tk, val col: Expr, val idx: Expr): Expr(G.N++, tk_)
     data class Call    (val tk_: Tk, val clo: Expr, val args: List<Expr>): Expr(G.N++, tk_)
+    data class Uno     (val tk_: Tk.Op, val e: Expr): Expr(G.N++, tk_)
+    data class Bin     (val tk_: Tk.Op, val e1: Expr, val e2: Expr): Expr(G.N++, tk_)
 }
 
 fun exec (hold: Boolean, cmds: List<String>): Pair<Boolean,String> {
