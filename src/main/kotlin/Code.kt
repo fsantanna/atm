@@ -40,7 +40,7 @@ class Coder () {
         return when (this) {
             is Expr.Proto -> """
                 function ()
-                    ${this.blk.code()}
+                    return ${this.blk.es.code()}
                 end
             """
             is Expr.Do -> {
@@ -53,25 +53,6 @@ class Coder () {
                          ${(!this.is_mem()).cond { "CEU_Block" }} $blkc = NULL;
                     """}}
                     
-                    ${(this.n != G.outer!!.n).cond { 
-                        this.to_dcls().let { dcls ->
-                            """
-                            ${(!this.is_mem()).cond { """
-                                //{ // inline vars dcls
-                                    ${dcls.map { """
-                                        CEU_Value ${it.idx(it)};
-                                    """ }.joinToString("")}
-                                //}
-                            """ }}
-                            { // vars inits
-                                ${dcls.map { """
-                                    ${it.idx(it)} = (CEU_Value) { CEU_VALUE_NIL };
-                                """ }.joinToString("")}
-                            }
-                            """
-                        }
-                    }}
-                
                     ${defers[this].cond { """
                         --{ // BLOCK | defers | init | ${this.dump()}
                             ${it.second}
@@ -143,15 +124,9 @@ class Coder () {
             """
             is Expr.Group -> "-- GROUP | ${this.dump()}\n" + this.es.code()
             is Expr.Dcl -> this.idtag.first.str.let { id ->
-                (!GLOBALS.contains(id)).cond { "local ${id.idc()}\n" }
+                (!GLOBALS.contains(id)).cond { "local ${id.idc()} ${this.src.cond { " = " + it.code() }}\n" }
              }
-            is Expr.Set -> """
-                { -- SET | ${this.dump()}
-                    ${this.src.code()}  // src is on the stack and should be returned
-                    // <<< SRC | DST >>>
-                    ${this.dst.code()}  // dst should not pop src
-                }
-            """
+            is Expr.Set -> this.dst.code() + " = " + this.src.code() + "\n"
             is Expr.If -> """
                 { -- IF | ${this.dump()}
                     ${this.cnd.code()}
@@ -548,31 +523,14 @@ class Coder () {
                     }
                 }
             }
-            is Expr.Acc -> this.tk.str
-            is Expr.Nil  -> "CEU_ACC(((CEU_Value) { CEU_VALUE_NIL }));"
-            is Expr.Tag  -> "CEU_ACC(((CEU_Value) { CEU_VALUE_TAG, {.Tag=CEU_TAG_${this.tk.str.idc()}} }));"
-            is Expr.Bool -> "CEU_ACC(((CEU_Value) { CEU_VALUE_BOOL, {.Bool=${if (this.tk.str == "true") 1 else 0}} }));"
+            is Expr.Acc -> this.tk.str.idc()
+            is Expr.Nil  -> "nil"
+            is Expr.Tag  -> '"' + this.tk.str + '"'
+            is Expr.Bool -> this.tk.str
             is Expr.Char -> "CEU_ACC(((CEU_Value) { CEU_VALUE_CHAR, {.Char=${this.tk.str}} }));"
             is Expr.Num  -> this.tk.str
 
-            is Expr.Tuple -> {
-                val id_args = this.idx("args_$n")
-                """
-                { -- TUPLE | ${this.dump()}
-                    ${(!this.is_mem()).cond { """
-                        CEU_Value ceu_args_$n[${max(1,this.args.size)}];
-                    """ }}
-                    ${this.args.mapIndexed { i, it ->
-                    it.code() + """
-                            $id_args[$i] = CEU_ACC_KEEP();
-                        """
-                }.joinToString("")}
-                    CEU_ACC (
-                        ceu_create_tuple(1, ${this.args.size}, $id_args CEU_LEX_X(COMMA ceux->depth));
-                    );
-                }
-            """
-            }
+            is Expr.Tuple -> "{ __type=\"tuple\", ${this.args.map { it.code() }.joinToString(",")} }\n"
             is Expr.Vector -> {
                 val id_vec = this.idx("vec_$n")
                 """

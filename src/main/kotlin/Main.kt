@@ -95,7 +95,7 @@ val TAGS = listOf (
 ))
 
 val GLOBALS = setOf (
-    "dump", "error", "next-dict", "print", "println",
+    "dump", "error", "next-dict",
     "sup?", "tag",
     "to-string-number", "to-string-pointer", "to-string-tag",
     "to-tag-string",
@@ -288,7 +288,7 @@ fun all (tst: Boolean, verbose: Boolean, inps: List<Pair<Triple<String, Int, Int
     if (verbose) {
         System.err.println("... executing ...")
     }
-    val (_, out) = exec(tst, "lua $out.lua")
+    val (_, out) = exec(tst, "lua5.4 $out.lua")
     //println(out)
     return out
 }
