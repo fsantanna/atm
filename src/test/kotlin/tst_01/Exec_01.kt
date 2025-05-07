@@ -14,7 +14,7 @@ class Exec_01 {
     @Test
     fun aa_00_print_err() {
         val out = test("""
-            println(1,2)
+            dump(1,2)
         """)
         assert(out == "1\t2\n") { out }
     }

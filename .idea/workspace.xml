@@ -4,7 +4,13 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="33c6c893-703f-40c1-8319-3d390ece657a" name="Changes" comment="" />
+    <list default="true" id="33c6c893-703f-40c1-8319-3d390ece657a" name="Changes" comment="...">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/C.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/C.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/Code.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/Code.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/Main.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/Main.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/kotlin/tst_01/Exec_01.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/kotlin/tst_01/Exec_01.kt" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -26,6 +32,7 @@
   "keyToString": {
     "Downloaded.Files.Path.Enabled": "false",
     "JUnit.Book_99.executor": "Run",
+    "JUnit.Exec_01.aa_00_print_err.executor": "Run",
     "JUnit.Exec_01.executor": "Run",
     "JUnit.Exec_02.executor": "Run",
     "JUnit.Exec_03.executor": "Run",
@@ -77,22 +84,7 @@
       <recent name="$PROJECT_DIR$/src" />
     </key>
   </component>
-  <component name="RunManager" selected="JUnit.Exec_01">
-    <configuration name="Book_99" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="atm" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="tst_99.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <option name="PACKAGE_NAME" value="tst_99" />
-      <option name="MAIN_CLASS_NAME" value="tst_99.Book_99" />
-      <option name="TEST_OBJECT" value="class" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
+  <component name="RunManager" selected="JUnit.Exec_01.aa_00_print_err">
     <configuration name="Exec_01" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="atm" />
       <extension name="coverage">
@@ -104,6 +96,22 @@
       <option name="PACKAGE_NAME" value="tst_01" />
       <option name="MAIN_CLASS_NAME" value="tst_01.Exec_01" />
       <option name="TEST_OBJECT" value="class" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="Exec_01.aa_00_print_err" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="atm" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="tst_01.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="tst_01" />
+      <option name="MAIN_CLASS_NAME" value="tst_01.Exec_01" />
+      <option name="METHOD_NAME" value="aa_00_print_err" />
+      <option name="TEST_OBJECT" value="method" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
@@ -154,11 +162,11 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="JUnit.Exec_01.aa_00_print_err" />
         <item itemvalue="JUnit.Exec_01" />
         <item itemvalue="JUnit.Parser_01" />
         <item itemvalue="JUnit.Lexer_01" />
         <item itemvalue="JUnit.test.kotlin.tst_01 in atm" />
-        <item itemvalue="JUnit.Book_99" />
       </list>
     </recent_temporary>
   </component>
@@ -187,12 +195,21 @@
       <option name="project" value="LOCAL" />
       <updated>1746584389398</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="...">
+      <option name="closed" value="true" />
+      <created>1746584761992</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1746584761992</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="- first commit" />
     <MESSAGE value="- copy from dceu" />
-    <option name="LAST_COMMIT_MESSAGE" value="- copy from dceu" />
+    <MESSAGE value="..." />
+    <option name="LAST_COMMIT_MESSAGE" value="..." />
   </component>
 </project>

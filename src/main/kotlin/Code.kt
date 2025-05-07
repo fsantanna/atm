@@ -38,151 +38,19 @@ class Coder () {
             assert(this is Expr.Acc || this is Expr.Index || this is Expr.Pub)
         }
         return when (this) {
-            is Expr.Proto -> {
-                val isexe = (this.tk.str != "func'")
-                val code = this.blk.code()
-                val id = this.id(G.outer!!)
-
-                val mem = """
-                    // PROTO | ${this.dump()}
-                    ${isexe.cond { """
-                        typedef struct CEU_Pro_$id {
-                            ${Mem(defers).pub(this)}
-                        } CEU_Pro_$id;                        
-                    """ }}
-                """
-                val src = """
-                    // PROTO | ${this.dump()}
-                    void ceu_pro_$id (CEUX* ceux) {
-                        ${isexe.cond{"""
-                            CEU_Pro_$id* ceu_mem = (CEU_Pro_$id*) ceux->exe->mem;                    
-                            ceux->exe->status = (ceux->act == CEU_ACTION_ABORT) ? CEU_EXE_STATUS_TERMINATED : CEU_EXE_STATUS_RESUMED;
-                            switch (ceux->exe->pc) {
-                                case 0:
-                                    if (ceux->act == CEU_ACTION_ABORT) {
-                                        CEU_ACC((CEU_Value) { CEU_VALUE_NIL });
-                                        return;
-                                    }
-                        """}}
-                        
-                        //{ // pars
-                            ${this.pars.mapIndexed { i,dcl -> """
-                                /*
-                                if ($i < ceux->n) {
-                                    CEU_ERROR_CHK_PTR (
-                                        assert(0 && "XXX"),
-                                        ceu_lex_chk_own(ceux->args[$i], (CEU_Lex) { CEU_LEX_MUTAB, ceux->depth }),
-                                        ${this.toerr()}
-                                    );
-                                }
-                                */
-                                ${this.blk.is_mem().cond2({ """
-                                    ceu_mem->${dcl.idtag.first.str.idc()}_${dcl.n}
-                                """ },{ """
-                                    CEU_Value ceu_loc_${dcl.idtag.first.str.idc()}_${dcl.n}
-                                """ })}
-                                    = ($i < ceux->n) ? ceux->args[$i] : (CEU_Value) { CEU_VALUE_NIL };
-                            """ }.joinToString("")}
-                            for (int i=${this.pars.size}; i<ceux->n; i++) {
-                                ceu_gc_dec_val(ceux->args[i]);
-                            }
-                        //}
-
-                        do {
-                            $code
-                        } while (0);
-                        
-                        ${(!this.fake).cond { """
-                        #if CEU >= 2
-                            assert(CEU_ESCAPE == CEU_ESCAPE_NONE);
-                        #endif
-                        """ }}
-
-                        { // pars
-                            CEU_Value ceu_acc_$n = CEU_ACC_KEEP();
-                            ${this.pars.mapIndexed { i,dcl -> """
-                                ceu_gc_dec_val (
-                                    ${this.blk.is_mem().cond2({ """
-                                        ceu_mem->${dcl.idtag.first.str.idc()}_${dcl.n}
-                                    """ },{ """
-                                        ceu_loc_${dcl.idtag.first.str.idc()}_${dcl.n}
-                                    """ })}
-                                );
-                            """ }.joinToString("")}
-                            CEU_ACC((CEU_Value) { CEU_VALUE_NIL });
-                            ceu_acc = ceu_acc_$n;
-                        }
-
-                        ${isexe.cond{"""
-                                ceu_exe_term(ceux);
-                            } // close switch
-                        """}}
-                    }
-                """
-                val cre = """ // CREATE | ${this.dump()}
-                {
-                    CEU_ACC (
-                        ceu_create_clo_${this.tk.str.dropLast(1)} (
-                            ceu_pro_$id,
-                            ${this.pars.size},
-                            ${G.nonlocs[this.n]!!.size}
-                            ${isexe.cond {", sizeof(CEU_Pro_$id)"}}
-                            CEU50(COMMA ceux->exe)
-                            CEU_LEX_X(COMMA ((CEU_Lex) { ${if (this.nst) "CEU_LEX_IMMUT" else "CEU_LEX_FLEET"}, ceux->depth }))
-                        )
-                    );
-                    
-                    // UPVALS = ${G.nonlocs[this.n]!!.size}
-                    {                        
-                        ${G.nonlocs[this.n]!!.mapIndexed { i,dcl ->
-                            """
-                            {
-                                CEU_Value upv = ${(dcl.fnex() as Expr.Dcl).idx(this.fupx())};
-                                ceu_gc_inc_val(upv);
-                                ceu_acc.Dyn->Clo.upvs.buf[$i] = upv;
-                            }
-                            """
-                        }.joinToString("\n")}
-                    }
-                }
-                """
-
-                when {
-                    isexe -> {
-                        pres.add(Pair(mem, src))
-                        cre
-                    }
-                    (this.nst && G.nonlocs[this.n]!!.isNotEmpty()) -> {
-                        src + cre
-                    }
-                    else -> {
-                        pres.add(Pair("", src))
-                        cre
-                    }
-                }
-            }
+            is Expr.Proto -> """
+                function ()
+                    ${this.blk.code()}
+                end
+            """
             is Expr.Do -> {
                 val body = this.es.code()   // before defers[this] check
                 val up = this.fup()
                 val blkc = this.idx("block_$n")
                 """
-                { // BLOCK | ${this.dump()}
-            #ifdef CEU_LEX
-                    ceux->depth++;
-            #endif
+                do -- BLOCK | ${this.dump()}
                     ${(CEU >= 4).cond { """
                          ${(!this.is_mem()).cond { "CEU_Block" }} $blkc = NULL;
-                    """}}
-                    ${(this.n == G.outer!!.n).cond { """
-                        { // ARGC / ARGV
-                            CEU_Value args[ceu_argc];
-                            for (int i=0; i<ceu_argc; i++) {
-                                args[i] = ceu_pointer_to_string(ceu_argv[i] CEU_LEX_X(COMMA 1));
-                                ceu_gc_inc_val(args[i]);
-                            }
-                            ceu_glb_ARGS = ceu_create_tuple(1, ceu_argc, args CEU_LEX_X(COMMA 1));
-                            ceu_gc_inc_val(ceu_glb_ARGS);
-                        }
                     """}}
                     
                     ${(this.n != G.outer!!.n).cond { 
@@ -205,25 +73,20 @@ class Coder () {
                     }}
                 
                     ${defers[this].cond { """
-                        //{ // BLOCK | defers | init | ${this.dump()}
+                        --{ // BLOCK | defers | init | ${this.dump()}
                             ${it.second}
-                        //}
+                        --}
                     """ }}
                     
-                    do { // BLOCK | ${this.dump()}
+                    do -- BLOCK | ${this.dump()}
                         $body
                         ${(up is Expr.Loop).cond { """
                             CEU_LOOP_STOP_${up!!.n}:
                         """ }}
-                    } while (0);
-
-                    // keep ceu_acc and restore after defers/gc_dec/kills
-                    // b/c they may change ceu_acc
-                    
-                    CEU_Value ceu_acc_$n = CEU_ACC_KEEP();
+                    end
 
                     ${defers[this].cond { """
-                        { // BLOCK | defers | term | ${this.dump()}
+                        { -- BLOCK | defers | term | ${this.dump()}
                             ${it.third}
                         }
                     """ }}
@@ -243,39 +106,17 @@ class Coder () {
                         }                            
                     """ }}
 
-                    { // dcls gc-dec
-                        ${this.to_dcls()
-                            .asReversed()
-                            .filter { !GLOBALS.contains(it.idtag.first.str) }
-                            .map { """
-                                ceu_gc_dec_val(${it.idx(it)});
-                            """ }
-                            .joinToString("")
-                        }
-                    }                        
-
-                    CEU_ACC((CEU_Value) { CEU_VALUE_NIL });
-                    ceu_acc = ceu_acc_$n;
-                    
+            --[[
             #ifdef CEU_LEX
                     ceux->depth--;
             #endif
-
-                    ${(CEU >= 2).cond { """
-                        if (CEU_ERROR != CEU_ERROR_NONE) {
-                            continue;
-                        }
-                        ${this.check_aborted("continue")}
-                        if (CEU_ESCAPE != CEU_ESCAPE_NONE) {
-                            continue;
-                        }
-                    """ }}
-                }
+            ]]--
+                end
                 """
             }
             is Expr.Enclose -> {
                 """
-                do { // ENCLOSE | ${this.dump()}
+                do { -- ENCLOSE | ${this.dump()}
                     ${this.es.code()}
                 } while (0);
                 if (CEU_ERROR != CEU_ERROR_NONE) {
@@ -291,7 +132,7 @@ class Coder () {
                 }                                                            
                 """
             }
-            is Expr.Escape -> """ // ESCAPE | ${this.dump()}
+            is Expr.Escape -> """ -- ESCAPE | ${this.dump()}
             {
                 ${this.e.cond { """
                     ${it.code()}
@@ -300,43 +141,19 @@ class Coder () {
                 continue;
             }
             """
-            is Expr.Group -> "// GROUP | ${this.dump()}\n" + this.es.code()
-            is Expr.Dcl -> {
-                val idx = this.idx(this)
-                """
-                // DCL | ${this.dump()}
-                ${when {
-                    //sta.protos_use_unused.contains(this.src) -> """
-                    //    // $idx: unused function
-                    //"""
-                    (this.src !== null) -> """
-                        ${this.src.code()}
-                        #ifdef CEU_LEX
-                        ${(!this.lex).cond { """
-                            //assert(ceu_acc.type<CEU_VALUE_DYNAMIC || ceu_acc.Dyn->Any.lex.depth!=CEU_LEX_MAX);
-                        """ }}
-                        CEU_ERROR_CHK_PTR (
-                            continue,
-                            ceu_lex_chk_own(ceu_acc, (CEU_Lex) { ${if (this.lex) "CEU_LEX_MUTAB" else "CEU_LEX_FLEET"}, ceux->depth }),
-                            ${this.toerr()}
-                        );
-                        #endif
-                        ceu_gc_inc_val(ceu_acc);
-                        $idx = ceu_acc;
-                    """
-                    else -> ""
-                }}
-                """
-            }
+            is Expr.Group -> "-- GROUP | ${this.dump()}\n" + this.es.code()
+            is Expr.Dcl -> this.idtag.first.str.let { id ->
+                (!GLOBALS.contains(id)).cond { "local ${id.idc()}\n" }
+             }
             is Expr.Set -> """
-                { // SET | ${this.dump()}
+                { -- SET | ${this.dump()}
                     ${this.src.code()}  // src is on the stack and should be returned
                     // <<< SRC | DST >>>
                     ${this.dst.code()}  // dst should not pop src
                 }
             """
             is Expr.If -> """
-                { // IF | ${this.dump()}
+                { -- IF | ${this.dump()}
                     ${this.cnd.code()}
                     {
                         int v = ceu_as_bool(ceu_acc);
@@ -349,14 +166,14 @@ class Coder () {
                 }
                 """
             is Expr.Loop -> """
-                // LOOP | ${this.dump()}
+                -- LOOP | ${this.dump()}
                 CEU_LOOP_START_${this.n}:
                     ${this.blk.code()}
                     goto CEU_LOOP_START_${this.n};
             """
-            is Expr.Data -> "// DATA | ${this.dump()}\n"
+            is Expr.Data -> "-- DATA | ${this.dump()}\n"
             is Expr.Drop -> """
-                // DROP | ${this.dump()}
+                -- DROP | ${this.dump()}
                 ${this.e.code()}
                 ${(LEX && !this.e.is_lval()).cond { """
                     CEU_ERROR_CHK_PTR (
@@ -369,7 +186,7 @@ class Coder () {
 
             is Expr.Catch -> {
                 """
-                { // CATCH ${this.dump()}
+                { -- CATCH ${this.dump()}
                     do { // catch
                         ${this.blk.code()}
                     } while (0); // catch
@@ -425,7 +242,7 @@ class Coder () {
             is Expr.Resume -> {
                 val coro = this.idx("coro_$n")
                 """
-                { // RESUME | ${this.dump()}
+                { -- RESUME | ${this.dump()}
                     ${(!this.is_mem()).cond { """
                         CEU_Value $coro;
                         CEU_Value ceu_args_$n[${this.args.size}];
@@ -467,12 +284,12 @@ class Coder () {
                     $coro.Dyn->Exe.clo->proto(&ceux_$n);
                     ceu_gc_dec_val($coro);
                     ${this.check_error_aborted("continue", this.toerr())}
-                } // CALL | ${this.dump()}
+                } -- CALL | ${this.dump()}
             """
             }
             is Expr.Yield -> {
                 """
-                { // YIELD ${this.dump()}
+                { -- YIELD ${this.dump()}
                     ${this.e.code()}
                     ceux->exe->status = CEU_EXE_STATUS_YIELDED;
                     ceux->exe->pc = $n;
@@ -485,7 +302,7 @@ class Coder () {
                     );
                 #endif
                     return;
-                case $n: // YIELD ${this.dump()}
+                case $n: -- YIELD ${this.dump()}
                     if (ceux->act == CEU_ACTION_ABORT) {
                         //CEU_ACC((CEU_Value) { CEU_VALUE_NIL }); // to be ignored in further move/checks
                         continue;
@@ -510,7 +327,7 @@ class Coder () {
                 val tsks = this.idx("tsks_$n")
                 val depth = if (this.tsks == null) "ceux->depth" else "$tsks.Dyn->Any.lex.depth"
                 """
-                { // SPAWN | ${this.dump()}
+                { -- SPAWN | ${this.dump()}
                     ${(!this.is_mem()).cond { """
                         CEU_Value ceu_tsks_$n;
                         CEU_Value ceu_args_$n[${this.args.size}];
@@ -590,11 +407,11 @@ class Coder () {
                         ${this.check_aborted("{ceu_gc_dec_val(ceu_exe_$n);continue;}")}
                         ceu_acc = ceu_exe_$n;
                     }
-                } // SPAWN | ${this.dump()}
+                } -- SPAWN | ${this.dump()}
                 """
             }
             is Expr.Delay -> """
-                // DELAY | ${this.dump()}
+                -- DELAY | ${this.dump()}
                 ceux->exe_task->time = CEU_TIME;
             """
             is Expr.Pub -> {
@@ -610,7 +427,7 @@ class Coder () {
                     }
                 }
                 """
-                { // PUB | ${this.dump()}
+                { -- PUB | ${this.dump()}
                     ${this.is_dst().cond{ """
                         ${this.dcl("CEU_Value")} $set = CEU_ACC_KEEP();
                     """ }}
@@ -652,11 +469,11 @@ class Coder () {
             is Expr.Toggle -> {
                 val id = this.idx( "tsk_$n")
                 """
-                {  // TOGGLE | ${this.dump()}
+                {  -- TOGGLE | ${this.dump()}
                     ${this.tsk.code()}
                     ${this.dcl("CEU_Value")} $id = CEU_ACC_KEEP();
                     ${this.on.code()}
-                    {   // TOGGLE | ${this.dump()}
+                    {   -- TOGGLE | ${this.dump()}
                         int on = ceu_as_bool(ceu_acc);
                         int ceu_err_$n = 0;
                         if (!ceu_istask_val($id)) {
@@ -693,7 +510,7 @@ class Coder () {
                 val blk = this.up_first { it is Expr.Do } as Expr.Do
                 val blkc = blk.idx("block_${blk.n}")
                 """
-                {  // TASKS | ${this.dump()}
+                {  -- TASKS | ${this.dump()}
                     ${this.max.code()}
                     CEU_Value ceu_tsks_$n = ceu_create_tasks(ceux, &$blkc, ceu_acc CEU_LEX_X(COMMA ceux->depth));
                     CEU_ACC(ceu_tsks_$n);
@@ -731,59 +548,17 @@ class Coder () {
                     }
                 }
             }
-            is Expr.Acc -> {
-                val idx = this.idx()
-                val dcl = this.id_to_dcl(this.tk.str)!!
-                when {
-                    this.is_dst() -> {
-                        val depth = this.depth_diff()
-                        """
-                        // ACC - SET | ${this.dump()}
-                        #ifdef CEU_LEX
-                        CEU_ERROR_CHK_PTR (
-                            continue,
-                            ceu_lex_chk_own(ceu_acc, (CEU_Lex) { ${if (dcl.lex) "CEU_LEX_MUTAB" else "CEU_LEX_FLEET"}, ceux->depth-$depth }),
-                            ${this.toerr()}
-                        );
-                        #endif
-                        ceu_gc_dec_val($idx);
-                        ceu_gc_inc_val(ceu_acc);
-                        $idx = ceu_acc;
-                        """
-                    }
-                    this.is_drop() -> {
-                        val depth = this.depth()
-                        """
-                        { // ACC - DROP | ${this.dump()}
-                            CEU_ACC((CEU_Value) { CEU_VALUE_NIL });     // ceu_acc may be equal to $idx (hh_05_coro)
-                            CEU_Value ceu_$n = $idx;
-                            $idx = (CEU_Value) { CEU_VALUE_NIL };
-                            CEU_ERROR_CHK_PTR (
-                                continue,
-                                ceu_drop(ceu_$n, ceux->depth-$depth),
-                                ${this.fupx().toerr()}
-                            );
-                            CEU_ACC(ceu_$n);
-                            ceu_gc_dec_val(ceu_$n);
-                        }
-                        """
-                    }
-                    else -> """
-                        // ACC - GET | ${this.dump()}
-                        CEU_ACC($idx);
-                    """
-                }
-            }
+            is Expr.Acc -> this.tk.str
             is Expr.Nil  -> "CEU_ACC(((CEU_Value) { CEU_VALUE_NIL }));"
             is Expr.Tag  -> "CEU_ACC(((CEU_Value) { CEU_VALUE_TAG, {.Tag=CEU_TAG_${this.tk.str.idc()}} }));"
             is Expr.Bool -> "CEU_ACC(((CEU_Value) { CEU_VALUE_BOOL, {.Bool=${if (this.tk.str == "true") 1 else 0}} }));"
             is Expr.Char -> "CEU_ACC(((CEU_Value) { CEU_VALUE_CHAR, {.Char=${this.tk.str}} }));"
-            is Expr.Num  -> "CEU_ACC(((CEU_Value) { CEU_VALUE_NUMBER, {.Number=${this.tk.str}} }));"
+            is Expr.Num  -> this.tk.str
 
             is Expr.Tuple -> {
                 val id_args = this.idx("args_$n")
                 """
-                { // TUPLE | ${this.dump()}
+                { -- TUPLE | ${this.dump()}
                     ${(!this.is_mem()).cond { """
                         CEU_Value ceu_args_$n[${max(1,this.args.size)}];
                     """ }}
@@ -801,7 +576,7 @@ class Coder () {
             is Expr.Vector -> {
                 val id_vec = this.idx("vec_$n")
                 """
-                { // VECTOR | ${this.dump()}
+                { -- VECTOR | ${this.dump()}
                     ${this.dcl()} $id_vec = ceu_create_vector(CEU_LEX_X(ceux->depth));
                     ${this.args.mapIndexed { i, it ->
                         it.code() + """
@@ -816,7 +591,7 @@ class Coder () {
                 val id_dic = this.idx("dic_$n")
                 val id_key = this.idx("key_$n")
                 """
-                { // DICT | ${this.dump()}
+                { -- DICT | ${this.dump()}
                     ${this.dcl()} $id_dic = ceu_create_dict(CEU_LEX_X(ceux->depth));
                     ${this.args.map { """
                         {
@@ -842,13 +617,13 @@ class Coder () {
                 val id_col = this.idx("col_$n")
                 val id_val = this.idx("val_$n")
                 """
-                { // INDEX | ${this.dump()}
-                    // VAL
+                { -- INDEX | ${this.dump()}
+                    -- VAL
                     ${this.is_dst().cond { """
                         ${this.dcl()} $id_val = CEU_ACC_KEEP();
                     """ }}
                     
-                    // COL
+                    -- COL
                     ${this.col.code()}
                     ${this.dcl()} $id_col = CEU_ACC_KEEP();
 
@@ -864,7 +639,7 @@ class Coder () {
                 """ +
                 when {
                     this.is_dst() -> """
-                        { // INDEX | DST | ${this.dump()}
+                        { -- INDEX | DST | ${this.dump()}
                             char* ceu_err_$n = ceu_col_set($id_col, ceu_idx_$n, $id_val);
                             ceu_gc_dec_val($id_col);
                             ceu_gc_dec_val(ceu_idx_$n);
@@ -879,7 +654,7 @@ class Coder () {
                     this.is_drop() -> {
                         val depth = this.base()!!.depth_diff()
                         """
-                        { // INDEX | DROP | ${this.dump()}
+                        { -- INDEX | DROP | ${this.dump()}
                             CEU_ACC((CEU_Value) { CEU_VALUE_NIL });     // ceu_acc may be equal to $idx (hh_05_coro)
                             CEU_Value ceu_$n = ceu_col_get($id_col, ceu_idx_$n);
                             ceu_gc_inc_val(ceu_$n);
@@ -905,43 +680,7 @@ class Coder () {
                 }
                 """
             }
-            is Expr.Call -> """
-                { // CALL | ${this.dump()}
-                    ${(!this.is_mem()).cond { """
-                        CEU_Value ceu_args_$n[${this.args.size}];
-                    """ }}
-                    ${this.args.mapIndexed { i,e ->
-                        e.code() + """
-                            ${this.idx("args_$n")}[$i] = CEU_ACC_KEEP();
-                        """
-                    }.joinToString("")}
-                    ${this.clo.code()}
-                    CEU_Value ceu_clo_$n = CEU_ACC_KEEP();
-                    if (ceu_clo_$n.type != CEU_VALUE_CLO_FUNC) {
-                        ceu_gc_dec_val(ceu_clo_$n);
-                        CEU_ERROR_CHK_PTR (
-                            continue,
-                            "expected function",
-                            ${this.toerr()}
-                        );
-                    }
-                    CEUX ceux_$n = {
-                        (CEU_Clo*) ceu_clo_$n.Dyn,
-                    #if CEU >= 3
-                        {NULL}, CEU_ACTION_INVALID,
-                    #endif
-                    #if CEU >= 4
-                        ceux,
-                    #endif
-                        CEU_LEX_X(ceux->depth+1 COMMA)
-                        ${this.args.size},
-                        ${this.idx("args_$n")}
-                    };
-                    ceu_clo_$n.Dyn->Clo.proto(&ceux_$n);
-                    ceu_gc_dec_val(ceu_clo_$n);
-                    ${this.check_error_aborted("continue", this.toerr())}
-                } // CALL | ${this.dump()}
-            """
+            is Expr.Call -> this.clo.code() + "(" + this.args.map { it.code() }.joinToString(", ") + ")\n"
         }
     }
 }

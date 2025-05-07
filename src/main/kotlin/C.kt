@@ -2362,63 +2362,11 @@ fun Coder.main (): String {
         return pres + poss
     }
 
-    // MAIN
-    fun main (): String {
-        return """
-    ${this.pres.unzip().let { (mems,protos) ->
-        mems.joinToString("") + protos.joinToString("")
-    }}
-    
-    int main (int ceu_argc, char** ceu_argv) {
-        assert(CEU_TAG_nil == CEU_VALUE_NIL);
-        
-    #if CEU >= 2
-        CEU_ERROR_STACK = ceu_create_vector(1);
-        ceu_gc_inc_val(CEU_ERROR_STACK);
-    #endif
-
-        CEUX _ceux_ = {
-            NULL, CEU3({NULL} COMMA CEU_ACTION_INVALID COMMA) CEU4(NULL COMMA) CEU_LEX_X(0 COMMA) 0, NULL
-        };
-        CEUX* ceux = &_ceux_;
-        
-        do {
-            ${this.code}
-        } while (0);
-
-    #if CEU >= 2
-        assert(CEU_ESCAPE == CEU_ESCAPE_NONE);
-
-        // uncaught throw
-        if (CEU_ERROR != CEU_ERROR_NONE) {
-            CEU_ERROR = CEU_ERROR_NONE;     // ceu_print1 may raise error?
-            CEU_Vector* vec = &CEU_ERROR_STACK.Dyn->Vector;
-            for (int i=vec->its-1; i>=0; i--) {
-                CEU_Value s = ceu_vector_get(vec, i);
-                printf(" |  ");
-                assert(s.type == CEU_VALUE_POINTER);
-                puts((char*) s.Pointer);
-            }
-            printf(" v  error : ");
-            if (ceu_acc.type == CEU_VALUE_POINTER) {
-                puts((char*) ceu_acc.Pointer);
-            } else {
-                ceu_print1(ceu_acc);
-                assert(CEU_ERROR == CEU_ERROR_NONE);
-                puts("");
-            }
-        }
-        ceu_gc_dec_val(CEU_ERROR_STACK);
-    #endif
-        
-        CEU_ACC(((CEU_Value) { CEU_VALUE_NIL }));
-        return 0;
-    }
-    """
-    }
-
     return (
-        h_includes() + h_defines() + h_enums() +
+        """
+        local dump = print
+        """ +
+        /*h_includes() + h_defines() + h_enums() +
         h_value_dyn() + h_tags() + x_globals() +
         gc() + c_tags() + c_error + c_impls() + dumps() +
         lex() +
@@ -2428,6 +2376,6 @@ fun Coder.main (): String {
         (CEU>=4).cond { c_task } +
         (CEU>=4).cond { c_bcast } +
         (CEU>=5).cond { c_tasks } +
-        c_globals() + main()
+        c_globals() +*/ this.code
     )
 }

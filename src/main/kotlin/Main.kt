@@ -19,13 +19,6 @@ var CEU = 1
     // 99: sugar                                ;;  0
     // TODO: copy, underscore, self (coro/task)
 
-// search in tests output for
-//  definitely|Invalid read|Invalid write|uninitialised|uninitialized|free'd|alloc'd
-//  - definitely lost
-//  - Invalid read of size
-//  - uninitialised value
-val VALGRIND = ""
-//val VALGRIND = "valgrind "
 val THROW = false
 //val THROW = true
 
@@ -241,7 +234,7 @@ fun all (tst: Boolean, verbose: Boolean, inps: List<Pair<Triple<String, Int, Int
         return e.message!! + "\n"
     }
     //println(es.to_str())
-    val c = try {
+    val lua = try {
         if (verbose) {
             System.err.println("... analysing ...")
         }
@@ -278,7 +271,7 @@ fun all (tst: Boolean, verbose: Boolean, inps: List<Pair<Triple<String, Int, Int
         //println(G.outer!!.to_str())
         //rets.pub.forEach { println(listOf(it.value,it.key.javaClass.name,it.key.tk.pos.lin)) }
         if (verbose) {
-            System.err.println("... atm -> c ...")
+            System.err.println("... atm -> lua ...")
         }
         val coder = Coder()
         coder.main()
@@ -291,21 +284,13 @@ fun all (tst: Boolean, verbose: Boolean, inps: List<Pair<Triple<String, Int, Int
     if (verbose) {
         System.err.println("... c -> exe ...")
     }
-    File("$out.c").writeText(c)
-    val cmd = listOf("gcc", "-Werror", "$out.c", "-l", "m", "-o", "$out.exe") + args
-    if (verbose) {
-        System.err.println("\t" + cmd.joinToString(" "))
-    }
-    val (ok2, out2) = exec(true, cmd)
-    if (!ok2) {
-        return out2
-    }
+    File("$out.lua").writeText(lua)
     if (verbose) {
         System.err.println("... executing ...")
     }
-    val (_, out3) = exec(tst, "$VALGRIND./$out.exe")
-    //println(out3)
-    return out3
+    val (_, out) = exec(tst, "lua $out.lua")
+    //println(out)
+    return out
 }
 
 fun test (inp: String, pre: Boolean=false): String {
